@@ -1,8 +1,27 @@
-# myFiftyoneComputerVision
+# myFiftyOne and Computer Vision
 Voxel51 Computer Vision - embeddings, dimensionality reduction, clustering, vis and more
 
+## Description
+Visualizing Data with Dimensionality Reduction Techniques
+
+Using 51 walkthrough, run dimensionality reduction techniques (PCA, t-SNE, UMAP) on shipping docs in FiftyOne!
+
+MLP: get images from a dir -> create 51dataset w/ images, embeddings, and PCA dim reductions -> export 51dataset
+
+## License
+For open source projects, say how it is licensed:  
+Refer to license https://github.com/voxel51/fiftyone/blob/develop/LICENSE
+
+## Project status
+POC stage, running compute intensive tasks on GPU in Azure Machine Learning Studio and then viewing the results locally in FiftyOne tool.
+
+## Solution design
+Flowchart  
+![alt Flowchart](vis/vis_mermaid_51Flowchart.PNG)
+
+### Mermaid Diagram Flowchart
+
 ```mermaid
-%%{init: {"flowchart": {"htmlLabels": false}} }%%
   flowchart LR
     a1("`**Azure File Storage**
     Store PDFs`") --> a2("`**Azure ML**
@@ -17,10 +36,11 @@ Voxel51 Computer Vision - embeddings, dimensionality reduction, clustering, vis 
       Convert PDFs to images`")
     end    
 ```
+
 ```mermaid
-%%{init: {"flowchart": {"htmlLabels": false}} }%%
+
   flowchart LR
-    subgraph "`**From Images to 51Dataset**`"
+    subgraph "**From Images to 51Dataset**"
       b1("`**Azure ML GPU**
       aml_mlp_part1.py
       create 51dataset w/ images, embeddings,
@@ -30,13 +50,14 @@ Voxel51 Computer Vision - embeddings, dimensionality reduction, clustering, vis 
       b1("`**Azure ML GPU**
       aml_mlp_part1.py
       create 51dataset w/ images, embeddings,
-      and PCA dim reductions`") --> b3("`Export 51Dataset`")
+      and PCA dim reductions`") --> b3[Export 51Dataset]
       b2("`**Azure ML CPU**
       aml_mlp_part2.py
-      append w/ TSNE and UMAP reductions`") --> b3("`Export 51Dataset`")
+      append w/ TSNE and UMAP reductions`") --> b3[Export 51Dataset]
     end
 
-    subgraph "`**On-Prem 51App**`"
-      b3("`Export 51Dataset`") --> c1("`Visualize 51Dataset`")
+    subgraph "**On-Prem 51App**"
+      b3[Export 51Dataset] --> c1[Visualize 51Dataset]
     end
 ```
+
