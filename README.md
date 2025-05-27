@@ -17,7 +17,7 @@ POC stage, running compute intensive tasks on GPU in Azure Machine Learning Stud
 
 ## Solution design
 Flowchart  
-![alt Flowchart](vis/vis_mermaid_51Flowchart.PNG)
+![alt Flowchart](vis_mermaid_51Flowchart.PNG)
 
 ### Mermaid Diagram Flowchart
 
@@ -28,19 +28,43 @@ Flowchart
     aml_mlp_0_data.ipynb
     Get PDFs from storage`")
 
-    subgraph "`**Azure Curate Dataset**`"
+    subgraph "**Azure Images Dataset**"
       a2("`**Azure ML**
       aml_mlp_0_data.ipynb
       Get PDFs from storage`") --> a3("`**Azure ML**
       aml_mlp_1_prep_data.ipynb
       Convert PDFs to images`")
-    end    
+    end       
 ```
 
 ```mermaid
 
   flowchart LR
-    subgraph "**From Images to 51Dataset**"
+    a11("`**Original Docs Storage**
+    Images and Metadata`") --> a12("`**WLaptop VSCode**
+    mlp_0_data.ipynb
+    Tidy metadata
+    df_samples.parquet`")
+
+   a12("`**WLaptop VSCode**
+    mlp_0_data.ipynb
+    Tidy metadata
+    df_samples.parquet`") --> b1("`**Azure ML GPU**
+      aml_mlp_part1.py
+      create 51dataset w/ images, embeddings,
+      and PCA dim reductions`")
+
+            
+    subgraph "**On-prem Full MLP**"
+      a12("`**WLaptop VSCode**
+      mlp_0_data.ipynb
+      Tidy metadata
+      df_samples.parquet`") --> a13("`**WLaptop VSCode**
+      mlp_1_prep_data.ipynb
+      Full MLP: from images to 51App`")
+    end
+
+    subgraph "**Azure MLP: From Images to 51Dataset**"
       b1("`**Azure ML GPU**
       aml_mlp_part1.py
       create 51dataset w/ images, embeddings,
@@ -58,6 +82,9 @@ Flowchart
 
     subgraph "**On-Prem 51App**"
       b3[Export 51Dataset] --> c1[Visualize 51Dataset]
+      a13("`**WLaptop VSCode**
+      mlp_1_prep_data.ipynb
+      Full MLP: from images to 51App`")  --> c1[Visualize 51Dataset]
     end
 ```
 
