@@ -87,4 +87,36 @@ Flowchart
       Full MLP: from images to 51App`")  --> c1[Visualize 51Dataset]
     end
 ```
+### Updated: Mermaid Diagram Flowchart for `Sample Invoices 250`
+
+```mermaid
+  flowchart LR
+    a1("`**Azure File Storage**
+    Store PDFs`") --> a2("`**Azure ML**
+    aml_mlp_0_data.ipynb
+    Get PDFs from storage`")
+
+    subgraph "**Azure Images Dataset**"
+      a2("`**Azure ML**
+      aml_mlp_0_data.ipynb
+      Get PDFs from storage`") --> a3("`**Azure ML**
+      aml_mlp_1_prep_data.ipynb
+      Convert PDFs to images + Create Metadata`")
+    end
+
+  subgraph "**On-prem Full MLP + 51App**"
+      a3("`**Azure ML**
+      aml_mlp_1_prep_data.ipynb
+      Convert PDFs to images + Create Metadata`") --> b1("`**WLaptop VSCode**
+      mlp_1_full.ipynb
+      Full MLP: from images to 51App`")
+      b1("`**WLaptop VSCode**
+      mlp_1_full.ipynb
+      Full MLP: from images to 51App`") --> b2[Export 51Dataset]
+      b1("`**WLaptop VSCode**
+      mlp_1_full.ipynb
+      Full MLP: from images to 51App`") --> b3[Visualize 51Dataset]
+      b2[Export 51Dataset] --> b3[Visualize 51Dataset]
+    end       
+```
 
