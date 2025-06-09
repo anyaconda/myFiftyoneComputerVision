@@ -17,7 +17,7 @@ POC stage, running compute intensive tasks on GPU in Azure Machine Learning Stud
 
 ## Solution design
 Flowchart  
-![alt Flowchart](vis_mermaid_51Flowchart.PNG)
+![alt Flowchart](vis/vis_mermaid_51Flowchart.PNG)
 
 ### Mermaid Diagram Flowchart
 
@@ -88,6 +88,8 @@ Flowchart
     end
 ```
 ### Updated: Mermaid Diagram Flowchart for `Sample Invoices 250`
+Flowchart  
+![alt Flowchart](vis/vis_mermaid_51Flowchart_SampleInvoices250.PNG)
 
 ```mermaid
   flowchart LR

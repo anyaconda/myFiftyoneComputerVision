@@ -17,7 +17,7 @@ POC stage, running compute intensive tasks on GPU in Azure Machine Learning Stud
 
 ## Solution design
 Flowchart  
-![alt Flowchart](vis_mermaid_51Flowchart.PNG)
+![alt Flowchart](vis/vis_mermaid_51Flowchart.PNG)
 
 ### Mermaid Diagram Flowchart
 
