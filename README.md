@@ -16,7 +16,7 @@ Refer to license https://github.com/voxel51/fiftyone/blob/develop/LICENSE
 POC stage, running compute intensive tasks on GPU in Azure Machine Learning Studio and then viewing the results locally in FiftyOne tool.
 
 ## Solution design
-Flowchart  
+- Flowchart (image)
 ![alt Flowchart](vis/vis_mermaid_51Flowchart.PNG)
 
 ### Mermaid Diagram Flowchart
@@ -87,10 +87,12 @@ Flowchart
       Full MLP: from images to 51App`")  --> c1[Visualize 51Dataset]
     end
 ```
-### Updated: Mermaid Diagram Flowchart for `Sample Invoices 250`
-Flowchart  
+
+- Updated Flowchart (image)
 ![alt Flowchart](vis/vis_mermaid_51Flowchart_SampleInvoices250.PNG)
 
+### Updated: Mermaid Diagram Flowchart for `Sample Invoices 250`
+- Mermaid Flowchart
 ```mermaid
   flowchart LR
     a1("`**Azure File Storage**
