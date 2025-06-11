@@ -1,11 +1,11 @@
-#meta for myFiftyoneComputerVision 6/10/2025. AML MLP. POC AI Doc Vision. . Split MLP Vis51 -> Part2 (off GPU code), dataset $config
+#meta for myFiftyoneComputerVision 6/10/2025. AML MLP. POC AI Doc Vision. Split MLP Vis51 -> Part2 CPU (off GPU code), dataset $config
 # AML: run this code on prem WLap (default env) or in cloud ok on CPU (.py only for now, conda env `evn-aml-doc-vision-310`)
-# MLP: export pre-created 51dataset w/ images, embeddings, and PCA dim reductions -> append w/ TSNE (no UMAP) reductions -> export 51dataset
+# MLP: export pre-created 51dataset w/ images, embeddings, and PCA dim reductions -> append w/ TSNE and UMAP reductions -> export 51dataset
 
 #References:
 # refer to https://docs.voxel51.com/tutorials/dimension_reduction.html?highlight=umap
 # code src: https://github.com/voxel51/fiftyone/blob/v1.4.0/docs/source/tutorials/dimension_reduction.ipynb
-# copy of aml_mlp_part2.py (for internal)
+# copy of aml_mlp_part2.py
 
 #infra_original: WLaptop + VSCode
 #      env: default
@@ -16,11 +16,10 @@
 #umap-learn 0.5.7
 #glob2 0.7
 
-#infra2: Azure cloud,  GPU compute 'gpu-ml-doc-vision2' 
-#       env conda activate evn-aml-doc-vision-310
-# refer to environment_droplet.yml, environment_droplet_hist.yml and extra steps
-#       environment_droplet_gpu2.yml, environment_droplet_gpu2_hist.yml
-#       environment_droplet_gpu2_updateUMAP.yml, environment_droplet_gpu2_updateUMAP_hist.yml but UMAP errors out
+#infra2: Azure cloud,  CPU compute 'cpu-ml-doc-vision' 
+#      env conda activate evn-aml-doc-vision-310
+# refer to environment_droplet.yml, environment_droplet_hist.yml 
+#       environment_droplet_updateUMAP.yml, environment_droplet_updateUMAP_hist.yml and UMAP works
 
 
 #input: $config 
@@ -32,7 +31,7 @@
 #        persist51_[DATASET_NAME]
 
 
-#previously in aml_mlp_part1.py
+#previously in aml_mlp_part2.py
 #5/20/2025 AML SPLIT MLP -> PART 1 (GPU OK CODE)
 #      MLP Vis51 Data w/ Dimensionality Reduction,  dataset $config
 #      Mostly needed accelarated Embeddings piece
@@ -44,7 +43,7 @@
 #5/20/2025 AML SPLIT MLP -> PART 2 (OFF GPU CODE)
 #      MLP Vis51 Data continues, dataset $config
 #      Export pre-created 51dataset w/ images, embeddings, and PCA dim reductions -> append w/ TSNE and UMAP reductions -> export 51dataset
-#      OK to run off GPU, until figure out GPU for TSNE (no UMAP)
+#      OK to run off GPU, until figure out GPU for TSNE and UMAP
 # $next: add fields
 
 #6/10/2025 AML SPLIT MLP -> PART 2, SOME WORKS ON GPU
@@ -53,6 +52,12 @@
 #      Which means real 'docs-5329' still errors out, UMAP reductions still error out
 #      Confirmed Vis51 on-prem deployment (4 brain keys)
 #$next: non-working pieces will work on CPU compute
+#
+#6/10/2025 AML SPLIT MLP -> PART 2 WORKS ON CPU
+#      Dataset 'sample-invoices-250'
+#      UMAP reductions
+#      Confirmed Vis51 on-prem deployment (6 brain keys)
+#per my memory, real 'docs-5329' also works on CPU but not confirmed
 
 
 #$MLP part1 -> (here) part2 -> zip and download output dir -> Vis51 mlp_2_deploy.ipynb on-prem
@@ -93,7 +98,7 @@ t0 = time.time()
 
 #---------------------------------------------------------------------------------------------------------------------
 ## 1. Append 51Dataset
-#part 2 -> TSNE (no UMAP) on embeddings (off GPU compute until figure it out)
+#part 2 -> TSNE and UMAP on embeddings (off GPU compute until figure it out)
 print(fo.list_datasets())
 
 # step: Export pre-created 51Dataset
@@ -147,26 +152,26 @@ finally:
     #---------------------------------------------------------------------------------------------------------------------
 
     #---------------------------------------------------------------------------------------------------------------------
-    # #No UMAP on embeddings
-    # ## UMAP with ResNet101 embeddings
-    # fob.compute_visualization(
-    #     dataset_doc_samples, 
-    #     embeddings="resnet101_embeddings", 
-    #     method="umap", 
-    #     brain_key="resnet101_umap"
-    # )
-    # t7a = time.time()
-    # print("Computed UMAP with Resnet101 embeddings (in min): ", (t7a - t6b)/60)
+    #UMAP on embeddings
+    ## UMAP with ResNet101 embeddings
+    fob.compute_visualization(
+        dataset_doc_samples, 
+        embeddings="resnet101_embeddings", 
+        method="umap", 
+        brain_key="resnet101_umap"
+    )
+    t7a = time.time()
+    print("Computed UMAP with Resnet101 embeddings (in min): ", (t7a - t6b)/60)
 
-    # ## UMAP with CLIP embeddings
-    # fob.compute_visualization(
-    #     dataset_doc_samples, 
-    #     embeddings="clip_embeddings", 
-    #     method="umap", 
-    #     brain_key="clip_umap"
-    # )
-    # t7b = time.time()
-    # print("Computed UMAP with CLIP embeddings (in min): ", (t7b - t6b)/60)
+    ## UMAP with CLIP embeddings
+    fob.compute_visualization(
+        dataset_doc_samples, 
+        embeddings="clip_embeddings", 
+        method="umap", 
+        brain_key="clip_umap"
+    )
+    t7b = time.time()
+    print("Computed UMAP with CLIP embeddings (in min): ", (t7b - t6b)/60)
     #---------------------------------------------------------------------------------------------------------------------
 
     print("\n")
@@ -180,7 +185,7 @@ finally:
 #persist 51dataset
 dataset_doc_samples.export(export_dir=EXPORT_PATH, dataset_type=fo.types.FiftyOneDataset)
 t10 = time.time()
-print("Persisted 51dataset (in min): ", (t10 - t6b)/60)
+print("Persisted 51dataset (in min): ", (t10 - t7b)/60)
 
 t20 = time.time()
 print("\nTotal time (in min): ", (t20 - t0)/60)

@@ -1,0 +1,14 @@
+name: evn-aml-doc-vision-310
+channels:
+  - https://repo.anaconda.com/pkgs/main
+  - https://repo.anaconda.com/pkgs/r
+dependencies:
+  - python==3.10.16
+  - anaconda::ipykernel
+  - conda-forge::fiftyone
+  - conda-forge::pyarrow
+  - conda-forge::pytorch
+  - pytorch::torchvision
+  - conda-forge::libjpeg-turbo
+  - conda-forge::umap-learn
+prefix: /anaconda/envs/evn-aml-doc-vision-310

@@ -1,4 +1,4 @@
-#meta for myFiftyoneComputerVision 6/10/2025 AML MLP 1 POC AI Doc Vision. Split MLP Vis51 -> Part1 (GPU ok code), dataset $config
+#meta for myFiftyoneComputerVision 6/10/2025. AML MLP. POC AI Doc Vision. Split MLP Vis51 -> Part1 (GPU ok code), dataset $config
 # AML: run this code in cloud on GPU for speed (.py only for now, conda env `evn-aml-doc-vision-310`)
 # MLP: get images from a dir -> create 51dataset w/ images, embeddings, and PCA dim reductions -> export 51dataset
 # $next: Part 2 (off GPU code)
@@ -17,9 +17,10 @@
 #umap-learn 0.5.7
 #glob2 0.7
 
-#infra2: Azure cloud, env conda activate evn-aml-doc-vision-310
+#infra2: Azure cloud,  GPU compute 'gpu-ml-doc-vision2' 
+#       env conda activate evn-aml-doc-vision-310
 # refer to environment_droplet.yml, environment_droplet_hist.yml and extra steps
-# refer to environment_droplet_gpu2.yml, environment_droplet_gpu2_hist.yml
+#       environment_droplet_gpu2.yml, environment_droplet_gpu2_hist.yml
 
 
 #input: $config 
